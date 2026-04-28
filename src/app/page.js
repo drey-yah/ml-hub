@@ -1,66 +1,35 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
+    <main className="page-shell">
+      <section className="card">
+        <span className="small-label">Simple Machine Learning Platform</span>
+
+        <h1>Machine Learning Hub</h1>
+
+        <p className="description">
+          Welcome to Machine Learning Hub, a simple web platform that introduces
+          users to machine learning topics, tools, and resources. This project
+          demonstrates how a frontend application can connect to Supabase
+          Authentication and be deployed online using Vercel.
+        </p>
+
+        <div className="actions">
+          <Link href="/login" className="button">
+            Get Started
+          </Link>
+
           <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://supabase.com/docs/guides/auth"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
+            className="button secondary"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            Learn About Auth
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
