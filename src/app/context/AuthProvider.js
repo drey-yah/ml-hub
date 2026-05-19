@@ -30,15 +30,23 @@ export function AuthProvider({ children }) {
     let mounted = true;
 
     async function init() {
-      const { data: { session } } = await supabase.auth.getSession();
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error("Session error:", error.message);
+        }
 
-      if (session?.user && mounted) {
-        setUser(session.user);
-        const profileData = await fetchProfile(session.user.id);
-        if (mounted) setProfile(profileData);
+        if (session?.user && mounted) {
+          setUser(session.user);
+          const profileData = await fetchProfile(session.user.id);
+          if (mounted) setProfile(profileData);
+        }
+      } catch (err) {
+        console.error("Auth init error:", err);
+      } finally {
+        if (mounted) setLoading(false);
       }
-
-      if (mounted) setLoading(false);
     }
 
     init();

@@ -50,20 +50,26 @@ export default function NewArticlePage() {
 
       if (articleError) throw articleError;
 
-      // 2. Notify all users (except admin)
-      const { data: users } = await supabase.from('profiles').select('id').eq('role', 'user');
-      
-      if (users && users.length > 0) {
-        const notifications = users.map(u => ({
-          user_id: u.id,
-          article_id: newArticle.id,
-          title: "New Article Published",
-          message: `"${newArticle.title}" has been published in ${newArticle.category}.`,
-          is_read: false
-        }));
-        
-        await supabase.from('notifications').insert(notifications);
-      }
+      // 2. Notify all users in the background (Fire and forget)
+      // This prevents the admin from waiting for all notifications to be inserted
+      (async () => {
+        try {
+          const { data: users } = await supabase.from('profiles').select('id').eq('role', 'user');
+          if (users && users.length > 0) {
+            const notifications = users.map(u => ({
+              user_id: u.id,
+              article_id: newArticle.id,
+              title: "New Article Published",
+              message: `"${newArticle.title}" has been published in ${newArticle.category}.`,
+              is_read: false
+            }));
+            
+            await supabase.from('notifications').insert(notifications);
+          }
+        } catch (err) {
+          console.error("Background notification error:", err);
+        }
+      })();
 
       router.push('/admin/articles');
     } catch (err) {

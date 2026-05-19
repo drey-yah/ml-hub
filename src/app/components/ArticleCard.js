@@ -92,7 +92,7 @@ export default function ArticleCard({ article, currentUserId, onLikeToggle }) {
           className="btn btn-secondary"
           style={{ padding: '0.4rem 0.75rem', fontSize: '0.85rem' }}
         >
-          Read &nearr;
+          View Article
         </a>
       </div>
     </div>
